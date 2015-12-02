@@ -19,7 +19,10 @@ public class ResultsArea extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 8443783513995441929L;
-
+	/**
+	 * 
+	 * @param main1
+	 */
 	public ResultsArea(TripleExplorer main1) {
 		main = main1;
 		setLayout(new BorderLayout());

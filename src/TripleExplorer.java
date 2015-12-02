@@ -21,8 +21,8 @@ import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
  
 /**
- * Example connection to Fuseki. For this to work, you need to start a local
- * Fuseki server like this: ./fuseki-server --update --mem /ds
+ * Exploring the possibilities of Triplestores with Apache Jena
+ * 
  */
 public class TripleExplorer extends JFrame{
     /**
@@ -46,7 +46,10 @@ public class TripleExplorer extends JFrame{
     public static void main(String[] args) {
     	new TripleExplorer();
     }
-    
+    /**
+     * initialising the TripleExplorer
+     * also initialising the other classes
+     */
     public TripleExplorer() {
     	searchedSubject = "";
     	searchedPredicate = "";
@@ -58,7 +61,9 @@ public class TripleExplorer extends JFrame{
     	update();
         
     }
-
+    /**
+     * initialising the GUI for the tripleExplorer
+     */
 	private void initGUI() {
     	setDefaultLookAndFeelDecorated(true);
     	mainPanel = new JPanel(new BorderLayout());
@@ -68,13 +73,19 @@ public class TripleExplorer extends JFrame{
     	pack();
     	setVisible(true);
     }
-    
+    /**
+     * updating the GUI when the user searches for something.
+     */
     public void update() {
     	updateResults();
     	searchBar.update();
     	resultsArea.update();
     }
-
+    /**
+     * updating the results
+     * putting the results in tables so it's easier to read.
+     * 
+     */
 	private void updateResults() {
     	updateQuery();
     	System.out.println(query);
@@ -101,7 +112,14 @@ public class TripleExplorer extends JFrame{
         tableData = finalArray;
         qe.close(); 
     }
-    
+    /**
+     * the query to be used to update the data shown in the table.
+     * normal query SELECt * WHERE {?subject ?predicate ?object};
+     * query will be updated when you click on a result in the table or enter something in the search boxes.
+     * subjectToUse		=	will be updated when user clicks a result in the first column.
+     * predicateToUse	=	will be updated when user clicks a result in the second column.
+     * ubjectToUse		=	will be updated when user clicks a result in the third column.
+     */
     private void updateQuery() {
     	//Default query to start.
     	if (query == null) {
@@ -124,43 +142,73 @@ public class TripleExplorer extends JFrame{
     
 		query = "SELECT ?subject ?predicate ?object WHERE {" + subjectToUse + " " + predicateToUse + " " + objectToUse + "}";
     }
-    
+    /**
+     * 
+     * @return
+     */
     public String getSearchedSubject() {
 		return searchedSubject;
 	}
-
+    /**
+     * 
+     * @param searchedSubject
+     */
 	public void setSearchedSubject(String searchedSubject) {
 		this.searchedSubject = searchedSubject;
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSearchedPredicate() {
 		return searchedPredicate;
 	}
-
+	/**
+	 * 
+	 * @param searchedPredicate
+	 */
 	public void setSearchedPredicate(String searchedPredicate) {
 		this.searchedPredicate = searchedPredicate;
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public String getSearchedObject() {
 		return searchedObject;
 	}
-
+	/**
+	 * 
+	 * @param searchedObject
+	 */
 	public void setSearchedObject(String searchedObject) {
 		this.searchedObject = searchedObject;
 	}
-    
+    /**
+     * 
+     * @return
+     */
     public Object[][] getTableData() {
 		return tableData;
 	}
-
+    /**
+     * 
+     * @param tableData
+     */
 	public void setTableData(Object[][] tableData) {
 		this.tableData = tableData;
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public Object[] getColumnNames() {
 		return columnNames;
 	}
-
+	/**	
+	 * 
+	 * @param columnNames
+	 */
 	public void setColumnNames(Object[] columnNames) {
 		this.columnNames = columnNames;
 	}
