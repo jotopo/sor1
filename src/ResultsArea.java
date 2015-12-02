@@ -13,14 +13,14 @@ public class ResultsArea extends JPanel {
 	
 	private JTable table;
     private JScrollPane scrollPane;
-    private Main1 main;
+    private TripleExplorer main;
     
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8443783513995441929L;
 
-	public ResultsArea(Main1 main1) {
+	public ResultsArea(TripleExplorer main1) {
 		main = main1;
 		setLayout(new BorderLayout());
 		table = new JTable();

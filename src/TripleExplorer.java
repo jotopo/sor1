@@ -24,7 +24,7 @@ import org.apache.jena.update.UpdateProcessor;
  * Example connection to Fuseki. For this to work, you need to start a local
  * Fuseki server like this: ./fuseki-server --update --mem /ds
  */
-public class Main1 extends JFrame{
+public class TripleExplorer extends JFrame{
     /**
 	 * 
 	 */
@@ -39,12 +39,15 @@ public class Main1 extends JFrame{
     private ResultSet results;
     private Object[] columnNames;
     private Object[][] tableData;
-    
+    /**
+     * Main
+     * @param args
+     */
     public static void main(String[] args) {
-    	new Main1();
+    	new TripleExplorer();
     }
     
-    public Main1() {
+    public TripleExplorer() {
     	searchedSubject = "";
     	searchedPredicate = "";
     	searchedObject = "";

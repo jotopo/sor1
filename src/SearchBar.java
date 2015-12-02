@@ -16,9 +16,9 @@ public class SearchBar extends JPanel implements ActionListener{
 	private JTextField subjectTextField, predicateTextField, objectTextField;
     private JLabel subjectLabel, predicateLabel, objectLabel;
     private JButton submitSearchButton, clearSearchButton;
-    private Main1 main;
+    private TripleExplorer main;
     
-    public SearchBar(Main1 main1) {
+    public SearchBar(TripleExplorer main1) {
     	main = main1;
     	subjectLabel = new JLabel("Subject:");
 		subjectTextField = new JTextField(20);
