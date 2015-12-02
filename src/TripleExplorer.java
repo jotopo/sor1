@@ -54,6 +54,7 @@ public class TripleExplorer extends JFrame{
      * initialising the GUI for the tripleExplorer
      */
 	private void initGUI() {
+		setTitle("JENAAAAAAA");
     	setDefaultLookAndFeelDecorated(true);
     	mainPanel = new JPanel(new BorderLayout());
     	mainPanel.add(searchBar, BorderLayout.NORTH);
