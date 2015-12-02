@@ -5,6 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class SearchBar extends JPanel implements ActionListener{
 	/**
@@ -38,7 +39,6 @@ public class SearchBar extends JPanel implements ActionListener{
 		submitSearchButton.addActionListener(this);
 		add(submitSearchButton);
 		
-		
 		clearSearchButton = new JButton("Clear");
 		clearSearchButton.addActionListener(this);
 		add(clearSearchButton);
@@ -56,9 +56,13 @@ public class SearchBar extends JPanel implements ActionListener{
 			main.setSearchedSubject(subjectTextField.getText());
 			main.setSearchedPredicate(predicateTextField.getText());
 			main.setSearchedObject(objectTextField.getText());
+			main.update();
 		}
 		else if(e.getSource() == clearSearchButton) {
-			
+			main.setSearchedSubject("");
+			main.setSearchedPredicate("");
+			main.setSearchedObject("");
+			main.update();
 		}
 	}
     
