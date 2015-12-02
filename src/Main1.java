@@ -3,9 +3,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -21,15 +25,17 @@ import org.apache.jena.update.UpdateProcessor;
  * Fuseki server like this: ./fuseki-server --update --mem /ds
  */
 public class Main1 extends JFrame{
-    /** A template for creating a nice SPARUL query */
-    private static final String UPDATE_TEMPLATE = 
-            "PREFIX dc: <http://purl.org/dc/elements/1.1/>"
-            + "INSERT DATA"
-            + "{ <http://example/%s>    dc:title    \"A new book\" ;"
-            + "                         dc:creator  \"A.N.Other\" ." + "}   ";
- 
-    private JTable table;
-    private JPanel panel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4946419531503171473L;
+
+    private JPanel mainPanel;    
+    private SearchBar searchBar;
+    private ResultsArea resultsArea;
+    
+    private String searchedSubject, searchedPredicate, searchedObject;
+    private String query;
     private ResultSet results;
     private Object[] columnNames;
     private Object[][] tableData;
@@ -39,31 +45,34 @@ public class Main1 extends JFrame{
     }
     
     public Main1() {
-    	retrieveResults();
-    	
+    	updateResults();
+    	searchBar = new SearchBar(this);
+    	resultsArea = new ResultsArea(this);
     	initGUI();
-        //Query the collection, dump output
+    	update();
         
     }
-    
-    private void initGUI() {
+
+	private void initGUI() {
     	setDefaultLookAndFeelDecorated(true);
-    	panel = new JPanel(new BorderLayout());
-    	createTable();
-    	
-    	add(panel);
+    	mainPanel = new JPanel(new BorderLayout());
+    	mainPanel.add(searchBar, BorderLayout.NORTH);
+    	mainPanel.add(resultsArea, BorderLayout.CENTER);
+    	add(mainPanel);
     	pack();
     	setVisible(true);
     }
     
-    private void createTable() {
-    	table = new JTable(tableData, columnNames);
-    	panel.add(table);
+    public void update() {
+    	updateResults();
+    	searchBar.update();
+    	resultsArea.update();
     }
- 
-    private void retrieveResults() {
+
+	private void updateResults() {
+    	updateQuery();
     	QueryExecution qe = QueryExecutionFactory.sparqlService(
-                "http://localhost:3030/SOR0.1/query", "SELECT * WHERE {?x ?r ?y}");
+                "http://localhost:3030/SOR/query", query);
         results = qe.execSelect();
         columnNames = results.getResultVars().toArray();
         ArrayList<Object[]> data = new ArrayList<Object[]>();
@@ -83,7 +92,69 @@ public class Main1 extends JFrame{
         	i++;
         }
         tableData = finalArray;
-        qe.close();
-        
+        qe.close(); 
     }
+    
+    private void updateQuery() {
+    	//Default query to start.
+    	if (query == null) {
+    		query = "SELECT * WHERE {?subject ?predicate ?object}";
+    		return;
+    	}
+    	String subjectToUse = "?subject";
+    	String predicateToUse = "?predicate";
+    	String objectToUse = "?object";
+    	
+    	if (searchedSubject != "") {
+    		subjectToUse = searchedSubject;
+    	}
+    	if (searchedPredicate != "") {
+    		predicateToUse = searchedPredicate;
+    	}
+    	if (searchedObject != "") {
+    		objectToUse = searchedObject;
+    	}
+    
+		query = "SELECT * WHERE {" + subjectToUse + " " + predicateToUse + " " + objectToUse + "}";
+    }
+    
+    public String getSearchedSubject() {
+		return searchedSubject;
+	}
+
+	public void setSearchedSubject(String searchedSubject) {
+		this.searchedSubject = searchedSubject;
+	}
+
+	public String getSearchedPredicate() {
+		return searchedPredicate;
+	}
+
+	public void setSearchedPredicate(String searchedPredicate) {
+		this.searchedPredicate = searchedPredicate;
+	}
+
+	public String getSearchedObject() {
+		return searchedObject;
+	}
+
+	public void setSearchedObject(String searchedObject) {
+		this.searchedObject = searchedObject;
+	}
+    
+    public Object[][] getTableData() {
+		return tableData;
+	}
+
+	public void setTableData(Object[][] tableData) {
+		this.tableData = tableData;
+	}
+
+	public Object[] getColumnNames() {
+		return columnNames;
+	}
+
+	public void setColumnNames(Object[] columnNames) {
+		this.columnNames = columnNames;
+	}
 }
