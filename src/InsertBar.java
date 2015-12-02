@@ -48,20 +48,24 @@ public class InsertBar extends JPanel implements ActionListener{
     }
     
 	public void update() {
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == submitInsertButton) {
-			String query = "INSERT DATA" +
+			if (subjectTextField.getText() != "" && predicateTextField.getText() != "" && objectTextField.getText() != "") {
+				String query = "INSERT DATA" +
 					"{ <" + subjectTextField.getText() + "> <" + predicateTextField.getText() + "> '" + objectTextField.getText() + "' }";
-			System.out.println(query);
-			String id = UUID.randomUUID().toString();
-			UpdateProcessor upp = UpdateExecutionFactory.createRemote(
-	                UpdateFactory.create(String.format(query, id)), 
-	                "http://localhost:3030/SOR/update");
-	        upp.execute();
-			main.update();
+				System.out.println(query);
+				String id = UUID.randomUUID().toString();
+				UpdateProcessor upp = UpdateExecutionFactory.createRemote(
+		                UpdateFactory.create(String.format(query, id)), 
+		                "http://localhost:3030/SOR/update");
+		        upp.execute();
+				main.update();
+			}
+			
 		}
 		else if(e.getSource() == clearInsertButton) {
 			clear();

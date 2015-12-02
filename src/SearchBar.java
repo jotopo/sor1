@@ -5,7 +5,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 public class SearchBar extends JPanel implements ActionListener{
 	/**

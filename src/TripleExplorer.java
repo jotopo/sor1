@@ -1,24 +1,11 @@
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.UUID;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
-import org.apache.jena.update.UpdateExecutionFactory;
-import org.apache.jena.update.UpdateFactory;
-import org.apache.jena.update.UpdateProcessor;
  
 /**
  * Exploring the possibilities of Triplestores with Apache Jena
@@ -33,6 +20,7 @@ public class TripleExplorer extends JFrame{
     private JPanel mainPanel;    
     private SearchBar searchBar;
     private ResultsArea resultsArea;
+    private InsertBar insertBar;
     
     private String searchedSubject, searchedPredicate, searchedObject;
     private String query;
@@ -57,6 +45,7 @@ public class TripleExplorer extends JFrame{
     	updateResults();
     	searchBar = new SearchBar(this);
     	resultsArea = new ResultsArea(this);
+    	insertBar = new InsertBar(this);
     	initGUI();
     	update();
         
@@ -69,6 +58,7 @@ public class TripleExplorer extends JFrame{
     	mainPanel = new JPanel(new BorderLayout());
     	mainPanel.add(searchBar, BorderLayout.NORTH);
     	mainPanel.add(resultsArea, BorderLayout.CENTER);
+    	mainPanel.add(insertBar, BorderLayout.SOUTH);
     	add(mainPanel);
     	pack();
     	setVisible(true);
@@ -80,6 +70,7 @@ public class TripleExplorer extends JFrame{
     	updateResults();
     	searchBar.update();
     	resultsArea.update();
+    	insertBar.update();
     }
     /**
      * updating the results
