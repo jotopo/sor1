@@ -115,7 +115,7 @@ public class TripleExplorer extends JFrame{
     private void updateQuery() {
     	//Default query to start.
     	if (query == null) {
-    		query = "SELECT ?subject ?predicate ?object WHERE {?subject ?predicate ?object}";
+    		query = "SELECT ?subject ?predicate ?object WHERE {?subject ?predicate ?object} ORDER BY ?subject";
     		return;
     	}
     	String subjectToUse = "?subject";
@@ -132,7 +132,7 @@ public class TripleExplorer extends JFrame{
     		objectToUse = '"' + searchedObject + '"';
     	}
     
-		query = "SELECT ?subject ?predicate ?object WHERE {" + subjectToUse + " " + predicateToUse + " " + objectToUse + "}";
+		query = "SELECT ?subject ?predicate ?object WHERE {" + subjectToUse + " " + predicateToUse + " " + objectToUse + "} ORDER BY ?subject";
     }
     /**
      * 
