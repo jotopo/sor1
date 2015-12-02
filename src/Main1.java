@@ -45,9 +45,6 @@ public class Main1 extends JFrame{
     }
     
     public Main1() {
-    	searchedSubject = "";
-    	searchedPredicate = "";
-    	searchedObject = "";
     	updateResults();
     	searchBar = new SearchBar(this);
     	resultsArea = new ResultsArea(this);
@@ -74,7 +71,6 @@ public class Main1 extends JFrame{
 
 	private void updateResults() {
     	updateQuery();
-    	System.out.println(query);
     	QueryExecution qe = QueryExecutionFactory.sparqlService(
                 "http://localhost:3030/SOR/query", query);
         results = qe.execSelect();
@@ -102,24 +98,24 @@ public class Main1 extends JFrame{
     private void updateQuery() {
     	//Default query to start.
     	if (query == null) {
-    		query = "SELECT ?subject ?predicate ?object WHERE {?subject ?predicate ?object}";
+    		query = "SELECT * WHERE {?subject ?predicate ?object}";
     		return;
     	}
     	String subjectToUse = "?subject";
     	String predicateToUse = "?predicate";
     	String objectToUse = "?object";
     	
-    	if (!searchedSubject.equals("")) {
-    		subjectToUse = '<' + searchedSubject + '>';
+    	if (searchedSubject != "") {
+    		subjectToUse = searchedSubject;
     	}
-    	if (!searchedPredicate.equals("")) {
-    		predicateToUse = '<' + searchedPredicate + '>';
+    	if (searchedPredicate != "") {
+    		predicateToUse = searchedPredicate;
     	}
-    	if (!searchedObject.equals("")) {
-    		objectToUse = '"' + searchedObject + '"';
+    	if (searchedObject != "") {
+    		objectToUse = searchedObject;
     	}
     
-		query = "SELECT ?subject ?predicate ?object WHERE {" + subjectToUse + " " + predicateToUse + " " + objectToUse + "}";
+		query = "SELECT * WHERE {" + subjectToUse + " " + predicateToUse + " " + objectToUse + "}";
     }
     
     public String getSearchedSubject() {
